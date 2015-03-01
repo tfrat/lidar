@@ -34,7 +34,7 @@
           <h1>
 <a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
 
-<p>Use unstructured three dimensional point cloud data taken from an aerial vehicle to generate a mesh representing the ground plane. We plan on a multistage approach consisting of filtering, segmentation and three dimensional mesh generation. Mean filtering will be used to reduce the inherent white noise found in LIDAR data sets. Segmentation research will be focused mainly on the graph cuts approach. </p>
+<p>The aim of this project is generate a the 3D mesh of the ground plane segmented from an unstructured three dimensional point cloud data taken from an aerial vehicle. We plan on a multistage approach consisting of filtering, segmentation and three dimensional mesh generation. Mean filtering will be used to reduce the inherent Gaussian white noise found in LIDAR data sets. Segmentation research will be focused mainly on the graph cuts approach as proposed by Boykov et al.. In the final stage the segmented ground point cloud will be made into a 3D mesh using an algorithm based on the work by Scheidegger et al.  </p>
 
 <hr>
 
@@ -115,14 +115,16 @@
 <h1>
 <a id="libraries" class="anchor" href="#libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Libraries</h1>
 
-<p><a href="http://docs.pointclouds.org/trunk/index.html">PCL</a>
-<a href="http://vtk.org/">VTK</a></p>
+<p><a href="http://docs.pointclouds.org/trunk/index.html">PCL</a></p>
+
+<p><a href="http://vtk.org/">VTK</a></p>
 
 <h1>
 <a id="datasets" class="anchor" href="#datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datasets</h1>
 
-<p><a href="http://dirsapps.cis.rit.edu/3d-rochester/data.html">RIT Imaging Science One</a>
-<a href="http://www.rit.edu/cos/share2012/downloadarea.php">RIT Imaging Science Two</a></p>
+<p><a href="http://dirsapps.cis.rit.edu/3d-rochester/data.html">RIT Imaging Science One</a></p>
+
+<p><a href="http://www.rit.edu/cos/share2012/downloadarea.php">RIT Imaging Science Two</a></p>
         </section>
 
         <footer>
