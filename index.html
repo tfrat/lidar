@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>Ground Plane Segmentation from Unstructured Point Clouds by tfrat</title>
+    <meta name="description" content="Ground Plane Segmentation from Unstructured Point Clouds : Tim Fratangelo &amp; Bret Minnehan">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ground Plane Segmentation from Unstructured Point Clouds</title>
   </head>
 
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>Ground Plane Segmentation from Unstructured Point Clouds</h1>
-          <h2>Tim Fratangelo &amp; Bret Minnehan</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tfrat/lidar">View on GitHub</a>
+
+          <h1 id="project_title">Ground Plane Segmentation from Unstructured Point Clouds</h1>
+          <h2 id="project_tagline">Tim Fratangelo &amp; Bret Minnehan</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/tfrat/lidar/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/tfrat/lidar/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
+    </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/tfrat/lidar/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/tfrat/lidar/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/tfrat/lidar" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
 <a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
 
 <p>The aim of this project is generate a the 3D mesh of the ground plane segmented from an unstructured three dimensional point cloud data taken from an aerial vehicle. We plan on a multistage approach consisting of filtering, segmentation and three dimensional mesh generation. Mean filtering will be used to reduce the inherent Gaussian white noise found in LIDAR data sets. Segmentation research will be focused mainly on the graph cuts approach as proposed by Boykov et al.. In the final stage the segmented ground point cloud will be made into a 3D mesh using an algorithm based on the work by Scheidegger et al.  </p>
@@ -41,13 +41,15 @@
 <h1>
 <a id="timeline" class="anchor" href="#timeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timeline</h1>
 
-<p>Week 6 </p>
+<h3>
+<a id="week-6" class="anchor" href="#week-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 6</h3>
 
 <ul>
 <li>Gain a basic understanding of the PCL library, run though a few sample point cloud datasets. (Both) </li>
 </ul>
 
-<p>Week 7 </p>
+<h3>
+<a id="week-7" class="anchor" href="#week-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 7</h3>
 
 <ul>
 <li>Test out the builtin features of the PCL library:
@@ -61,52 +63,60 @@
 <li>Create a very rudimentary segmentation of the ground plane by hand. (Both)</li>
 </ul>
 
-<p>Week 8 </p>
+<h3>
+<a id="week-8" class="anchor" href="#week-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 8</h3>
 
 <ul>
 <li>First presentation, show before and after filtering, mesh generation and the target ground plane mesh. (Both)</li>
 </ul>
 
-<p>Week 9 </p>
+<h3>
+<a id="week-9" class="anchor" href="#week-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 9</h3>
 
 <ul>
 <li>Research and experiment with different segmentation techniques, focusing on graph cuts. (Both)</li>
 </ul>
 
-<p>Week 10 </p>
+<h3>
+<a id="week-10" class="anchor" href="#week-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 10</h3>
 
 <ul>
 <li>Implement the chosen segmentation algorithm (Bret) </li>
 <li>Begin researching on the ways to determine the ground plane. (Tim)</li>
 </ul>
 
-<p>Week 11 </p>
+<h3>
+<a id="week-11" class="anchor" href="#week-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 11</h3>
 
 <ul>
 <li>Continue researching and implementing ground plane detection. (Both)</li>
 </ul>
 
-<p>Week 12 </p>
+<h3>
+<a id="week-12" class="anchor" href="#week-12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 12</h3>
 
 <ul>
 <li>Integration of the full pipeline (Both)</li>
 </ul>
 
-<p>Week 13 </p>
+<h3>
+<a id="week-13" class="anchor" href="#week-13" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 13</h3>
 
 <ul>
 <li>Testing/Integration (Bret)</li>
 <li>Write final paper (Tim)</li>
 </ul>
 
-<p>Week 14 </p>
+<h3>
+<a id="week-14" class="anchor" href="#week-14" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 14</h3>
 
 <ul>
 <li>Testing/Integration (Tim)</li>
 <li>Write final paper (Bret)</li>
 </ul>
 
-<p>Week 15 </p>
+<h3>
+<a id="week-15" class="anchor" href="#week-15" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 15</h3>
 
 <ul>
 <li>Final presentation</li>
@@ -150,15 +160,18 @@
 <p><a href="http://www.cis.rit.edu/%7Esxs4643/IEEEsun1.pdf">Aerial 3D Building Detection and Modeling From Airborne LiDAR Point Clouds</a></p>
 
 <p><a href="http://www.sci.utah.edu/%7Eshachar/Publications/MLSMesh.pdf">Triangulating Point Set Surfaces with Bounded Error</a></p>
-        </section>
-
-        <footer>
-          Ground Plane Segmentation from Unstructured Point Clouds is maintained by <a href="https://github.com/tfrat">tfrat</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
     </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ground Plane Segmentation from Unstructured Point Clouds maintained by <a href="https://github.com/tfrat">tfrat</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
