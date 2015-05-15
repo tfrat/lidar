@@ -32,95 +32,61 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h1>
+<a id="1-overview-and-goals" class="anchor" href="#1-overview-and-goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Overview and Goals</h1>
 
-<p>The aim of this project is generate a the 3D mesh of the ground plane segmented from an unstructured three dimensional point cloud data taken from an aerial vehicle. We plan on a multistage approach consisting of filtering, segmentation and three dimensional mesh generation. Mean filtering will be used to reduce the inherent Gaussian white noise found in LIDAR data sets. Segmentation research will be focused mainly on the graph cuts approach as proposed by Boykov et al.. In the final stage the segmented ground point cloud will be made into a 3D mesh using an algorithm based on the work by Scheidegger et al.  </p>
+<p>LiDAR (Light Detection and Ranging) sensors use time of flight measurements from a focused beam of light from a laser to measure the three-dimensional structure of an object or area.  LiDAR sensors have broad application to many domains including Archeology, Robotics, and Physics. As LiDAR sensors are decreasing in price and weight their use from aerial platforms is increasing. Aerial LiDAR imagery provides high-resolution topographic data for much cheaper than other methods. The data collected from LiDAR sensors are known as Point Clouds. Point Clouds are a series of points represented by their coordinates in the 3D Cartesian coordinate system.</p>
 
-<hr>
+<p>This work is focused on processing the data collected from airborne LiDAR sensors to segment points belonging to the ground plane to points belonging to objects or structures. This ground plane segmentation is useful for many different applications, such as surveying, in which the area of focus is purely the ground plane. A traditional approach for ground plane segmentation can be seen in Figure 1. This figure demonstrates how an initial point cloud is input into a system then it is preprocessed using various methods such as normalization and resampling to insure consistency of point clouds for the system. After the point cloud is pre-processed it is filtered using one of many filtering methods. After filtering it is then a plane fitting method is used to find the plane that best fits the majority of the data. After the plane is fit to the data a segmentation algorithm is used to extract the points that are consistent with the plane given various constraints. After the segmentation the points are feed into a mesh generation algorithm, which generates a triangulated mesh from the points on the ground plane. The aim of this work was to test multiple commonly used methods for each of these steps and determine which methods were optimal, as will be discussed for the remainder of the work.</p>
+
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Pipeline"></p>
+
+<p>The remainder of this site is organized as such: Section 2 discusses the configuration of the system used and the computer used for processing. Section 3 discusses the methods used for filtering the initial point cloud. Section 4 discusses the approaches for estimating the ground plane. Section 5 discusses the ground plane segmentation process. Section 6 outlines the steps taken for generating 3D triangulated meshes from a point cloud. Section 7 discusses the results from this work. Section 8 overviews some of the challenges encountered in this work. Finally Section 9 concludes and provides potential avenues for future work. </p>
 
 <h1>
-<a id="timeline" class="anchor" href="#timeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timeline</h1>
+<a id="2-setup" class="anchor" href="#2-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Setup</h1>
 
-<h3>
-<a id="week-6" class="anchor" href="#week-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 6</h3>
+<p>In this work we relied heavily on an open source C++ library known as the Point Cloud Library (PCL), which is supported by many large corporations in the 3D sensing industry. The library was compiled and used on a virtual machine running Ubuntu 15.04 with 16GB RAM, Intel i5 Processor.</p>
 
-<ul>
-<li>Gain a basic understanding of the PCL library, run though a few sample point cloud datasets. (Both) </li>
-</ul>
+<h1>
+<a id="3-filtering" class="anchor" href="#3-filtering" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Filtering</h1>
 
-<h3>
-<a id="week-7" class="anchor" href="#week-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 7</h3>
+<h2>
+<a id="1-passthrough-filter" class="anchor" href="#1-passthrough-filter" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Passthrough Filter</h2>
 
-<ul>
-<li>Test out the builtin features of the PCL library:
+<p>The passthrough filter relies on thresholding to eliminate points along a dimensional axis. By providing an upper and lower limit all points not within those bounds will be removed from the plot. Utilizing this filter for this project is not very beneficial as most LiDAR datasets deal with changes in elevation. As a result the data generally does not lie on a single plane. When the filter is applied, not only noise is eliminated but also important terrain points are removed as well.</p>
 
-<ul>
-<li>mesh generation (Tim)</li>
-<li>filtering (Bret) </li>
-<li>visualization (Both)</li>
-</ul>
-</li>
-<li>Create a very rudimentary segmentation of the ground plane by hand. (Both)</li>
-</ul>
+<h2>
+<a id="2-radius-outlier-removal" class="anchor" href="#2-radius-outlier-removal" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Radius Outlier Removal</h2>
 
-<h3>
-<a id="week-8" class="anchor" href="#week-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 8</h3>
+<p>The radius outlier removal algorithm measures the amount of local neighbors for each point. A point can be considered to have neighbors is they lie within a preset spherical radius. If there are not enough neighbors within the radius the point is removed from the cloud. This works well with removing isolated outliers. However if there are a clusters of noise they will not be filtered out.</p>
 
-<ul>
-<li>First presentation, show before and after filtering, mesh generation and the target ground plane mesh. (Both)</li>
-</ul>
+<h2>
+<a id="3-statistical-outlier-removal" class="anchor" href="#3-statistical-outlier-removal" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Statistical Outlier Removal</h2>
 
-<h3>
-<a id="week-9" class="anchor" href="#week-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 9</h3>
+<p>The statistical outlier removal algorithm filters is useful for removing measurement errors from LiDAR scans. This is done on a point by point basis. At each point the distance between each neighbor is used to calculate the mean and standard deviation. The amount of nearest neighbors for each point is passed as an argument to the algorithm along with the standard deviation threshold. If the point’s mean distance is larger than the standard deviation threshold </p>
 
-<ul>
-<li>Research and experiment with different segmentation techniques, focusing on graph cuts. (Both)</li>
-</ul>
+<h1>
+<a id="4-plane-estimation" class="anchor" href="#4-plane-estimation" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Plane Estimation</h1>
 
-<h3>
-<a id="week-10" class="anchor" href="#week-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 10</h3>
+<p>The concept behind the plane estimation problems is attempting to find a planer model that best fits the input data. Plane estimation should theoretically be a simple task if the data is planar and noise free; however the point clouds resulting from LiDAR scans rarely fit such conditions. Due to the inconsistencies of the ground in most environments and the inherent noise in LiDAR data more robust planer estimation algorithms must be used. The PCL library implements multiple robust model fitting algorithm including, Least Median of Squares (LMEDS), Random Sample and Consensus (RANSAC), and Progressive Sample and Consensus (PROSAC). Each of these algorithms will be discussed further below. 
+            The simplest of the three algorithms is Least Median of Squares[CITE], in this algorithm points in the dataset are randomly sampled in m groups which are then used to form m estimations for the model of the data. Once the models are calculated the residual for each point with respect to each model, how close is the point to fitting the model, is calculated. The score for each model is then determined by calculating the median of the residuals for all of the points. The median is used as opposed to the mean because the median has been shown to be more robust to outliers than the mean. The model that has the smallest median residual is then selected as the optimal model for the data.
+One of if not the most used model fitting algorithms is the Random Sample and Consensus algorithm. Unlike LMEDS, RANSAC is an iterative probabilistic method for model fitting. In the RANSAC algorithm an initial set of point are randomly selected from the complete dataset, the set selected is the minimal set that will solve for the given parameters for the model. Once a model is fit to the initial set the residuals for all of the remaining points are calculated. Any point whose residual falls within a specified threshold is considered an inlier point, part of the consensus set, all other points are considered outliers. If a specified number of inliers are found the algorithm then attempts to update the model given the updated set, including the new inliers, then the residuals are recalculated and new inliers are added. This process repeats until a minimum confidence value is achieved on the model’s fit or a maximum number of iterations were reached. This method was originally designed for image alignment based on match landmarks in [Fischler], but has been adapted for countless applications that require fitting a model to data.<br>
+The model-fitting algorithm used in this work that was most recently proposed was the Progressive Sample and Consensus algorithm [Chum]. The PROSAC method is an extension to the RANSAC method, with a slight alteration to the sampling procedure. Unlike RANSAC, which samples all point with equal probability, PROSAC relies on the quality of the correspondences selecting the points with the minimal residuals initially and progressively growing the set larger.  </p>
 
-<ul>
-<li>Implement the chosen segmentation algorithm (Bret) </li>
-<li>Begin researching on the ways to determine the ground plane. (Tim)</li>
-</ul>
+<h1>
+<a id="5-segmentation" class="anchor" href="#5-segmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Segmentation</h1>
 
-<h3>
-<a id="week-11" class="anchor" href="#week-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 11</h3>
+<h1>
+<a id="6-mesh-generation" class="anchor" href="#6-mesh-generation" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Mesh Generation</h1>
 
-<ul>
-<li>Continue researching and implementing ground plane detection. (Both)</li>
-</ul>
+<h1>
+<a id="7-results" class="anchor" href="#7-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Results</h1>
 
-<h3>
-<a id="week-12" class="anchor" href="#week-12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 12</h3>
+<h1>
+<a id="8-challenges" class="anchor" href="#8-challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Challenges</h1>
 
-<ul>
-<li>Integration of the full pipeline (Both)</li>
-</ul>
-
-<h3>
-<a id="week-13" class="anchor" href="#week-13" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 13</h3>
-
-<ul>
-<li>Testing/Integration (Bret)</li>
-<li>Write final paper (Tim)</li>
-</ul>
-
-<h3>
-<a id="week-14" class="anchor" href="#week-14" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 14</h3>
-
-<ul>
-<li>Testing/Integration (Tim)</li>
-<li>Write final paper (Bret)</li>
-</ul>
-
-<h3>
-<a id="week-15" class="anchor" href="#week-15" aria-hidden="true"><span class="octicon octicon-link"></span></a>Week 15</h3>
-
-<ul>
-<li>Final presentation</li>
-</ul>
+<h1>
+<a id="9-future-work" class="anchor" href="#9-future-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>9. Future Work</h1>
 
 <h1>
 <a id="libraries" class="anchor" href="#libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Libraries</h1>
@@ -167,7 +133,7 @@
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">Ground Plane Segmentation from Unstructured Point Clouds maintained by <a href="https://github.com/tfrat">tfrat</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
