@@ -38,7 +38,7 @@
 
 <p>This work is focused on processing the data collected from airborne LiDAR sensors to segment points belonging to the ground plane to points belonging to objects or structures. This ground plane segmentation is useful for many different applications, such as surveying, in which the area of focus is purely the ground plane. A traditional approach for ground plane segmentation can be seen in Figure 1. This figure demonstrates how an initial point cloud is input into a system then it is preprocessed using various methods such as normalization and resampling to insure consistency of point clouds for the system. After the point cloud is pre-processed it is filtered using one of many filtering methods. After filtering it is then a plane fitting method is used to find the plane that best fits the majority of the data. After the plane is fit to the data a segmentation algorithm is used to extract the points that are consistent with the plane given various constraints. After the segmentation the points are feed into a mesh generation algorithm, which generates a triangulated mesh from the points on the ground plane. The aim of this work was to test multiple commonly used methods for each of these steps and determine which methods were optimal, as will be discussed for the remainder of the work.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Pipeline"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGQ1BKMEN0akoxc0U" alt="Pipeline"></p>
 
 <p>The remainder of this site is organized as such: Section 2 discusses the configuration of the system used and the computer used for processing. Section 3 discusses the methods used for filtering the initial point cloud. Section 4 discusses the approaches for estimating the ground plane. Section 5 discusses the ground plane segmentation process. Section 6 outlines the steps taken for generating 3D triangulated meshes from a point cloud. Section 7 discusses the results from this work. Section 8 overviews some of the challenges encountered in this work. Finally Section 9 provides potential avenues for future work and Section 10 concludes. </p>
 
@@ -101,12 +101,17 @@ The model-fitting algorithm used in this work that was most recently proposed wa
 <h3>
 <a id="filtering" class="anchor" href="#filtering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering</h3>
 
-<p>Of the three filtering algorithms used statistical outlier removal performed the best. Passthrough thresholding generated an incomprehensible point cloud that generally did not resemble the input point cloud. The radius outlier removal algorithm performed much better and was able to remove a majority of noise surrounding the data set. Only tightly packed clusters of anomalous data points were left unfiltered. Statistical outlier removal however performed the best and removed almost all noise. A comparison between the original point cloud, radius and statistical can be seen in Figures _, _ and _ respectively. 
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGTjM5d1ZEQi1scFk" alt="Original Filter">
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGN1hPMm1SaXgyUWM" alt="Radius Filter">
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGMktLcVZDa3VhT0E" alt="Statistical Filter">
-Each algorithm was run on data sets of increasing size. Figure _ shows the timing results on datasets ranging from 7492 points to over 480k points. Since the passthrough filter is simply a thresholding procedure it performed very quickly at all point amounts. The radius outlier removal algorithm had very strange results and showed how difficult it is to compare data sets based on size. Instead of following an increasing trend the timing results for the radius implementation would increase and decrease as the point size increased. One explanation for this behavior is that the radius outlier removal algorithm performs more poorly when the dataset contains dense points. The runtime of the statistical outlier removal algorithm follows more traditional trend. As the size of the dataset increases the time increases as well. Only the radius and statistical outlier removal algorithms are comparable. For large data sets the radius removal algorithm will perform better than the statistical algorithm. However this is highly dependent on the density of the points within the dataset.
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGenlpRXVzYWRCUHM" alt="Filter Graph"></p>
+<p>Of the three filtering algorithms used statistical outlier removal performed the best. Passthrough thresholding generated an incomprehensible point cloud that generally did not resemble the input point cloud. The radius outlier removal algorithm performed much better and was able to remove a majority of noise surrounding the data set. Only tightly packed clusters of anomalous data points were left unfiltered. Statistical outlier removal however performed the best and removed almost all noise. A comparison between the original point cloud, radius and statistical can be seen in Figures _, _ and _ respectively. </p>
+
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGalB0bkctbUZ1WDQ" alt="Original Filter"></p>
+
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZm53VTFTRXZTMEU" alt="Radius Filter"></p>
+
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGU1hIOFBpUlZCeFU" alt="Statistical Filter"></p>
+
+<p>Each algorithm was run on data sets of increasing size. Figure _ shows the timing results on datasets ranging from 7492 points to over 480k points. Since the passthrough filter is simply a thresholding procedure it performed very quickly at all point amounts. The radius outlier removal algorithm had very strange results and showed how difficult it is to compare data sets based on size. Instead of following an increasing trend the timing results for the radius implementation would increase and decrease as the point size increased. One explanation for this behavior is that the radius outlier removal algorithm performs more poorly when the dataset contains dense points. The runtime of the statistical outlier removal algorithm follows more traditional trend. As the size of the dataset increases the time increases as well. Only the radius and statistical outlier removal algorithms are comparable. For large data sets the radius removal algorithm will perform better than the statistical algorithm. However this is highly dependent on the density of the points within the dataset.</p>
+
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGUVVWd0hTMW5jTDQ" alt="Filter Graph"></p>
 
 <h3>
 <a id="plane-estimation" class="anchor" href="#plane-estimation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plane Estimation</h3>
@@ -117,7 +122,7 @@ Each algorithm was run on data sets of increasing size. Figure _ shows the timin
 
 <p>The second set of tests was performed to analyze the computation time of each of the three plane estimation algorithms. A plot of the execution times for the algorithms run on datasets with varying number of points can be seen in Figure _. In this figure it is clear that the RANSAC algorithm takes significantly longer than both the LMEDS algorithm and the PROSAC algorithm. This is consistent with the fact that LMEDS is less complex than RANSAC and does not require multiple iterations. Additionally PROSAC is a more recently developed algorithm that greedily selects the best matching points initially, thus reducing the wasted computations on poorly matching points. As a result of this test we recommend using the PROSAC plane fitting algorithm for future work.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGS3FCcmZ4N0R6eDQ" alt="Plane Est Graph"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGYnBGUXJyVkVqNXc" alt="Plane Est Graph"></p>
 
 <h3>
 <a id="segmentation" class="anchor" href="#segmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Segmentation</h3>
