@@ -131,8 +131,6 @@ The model-fitting algorithm used in this work that was most recently proposed wa
 
 <p>Each algorithm was run on data sets of increasing size. Figure 5 shows the timing results on datasets ranging from 7492 points to over 480k points. Since the passthrough filter is simply a thresholding procedure it performed very quickly at all point amounts. The radius outlier removal algorithm had very strange results and showed how difficult it is to compare data sets based on size. Instead of following an increasing trend the timing results for the radius implementation would increase and decrease as the point size increased. One explanation for this behavior is that the radius outlier removal algorithm performs more poorly when the dataset contains dense points. The runtime of the statistical outlier removal algorithm follows more traditional trend. As the size of the dataset increases the time increases as well. Only the radius and statistical outlier removal algorithms are comparable. For large data sets the radius removal algorithm will perform better than the statistical algorithm. However this is highly dependent on the density of the points within the dataset.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGUVVWd0hTMW5jTDQ" alt="5 - Filter Graph"></p>
-
 <p>
     <figure>
 
