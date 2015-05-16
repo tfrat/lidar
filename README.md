@@ -2,7 +2,7 @@
 
 Go to the [Point Cloud Library website](http://pointclouds.org/downloads/) and follow the installation instructions. Make sure to install the required dependencies.
 
-Once the installation has been completed navigate to the source directory and enter the following commands to generate an executable:
+Once the installation has been completed navigate to the source directory of this project and enter the following commands to generate an executable:
 
 mkdir build
 
