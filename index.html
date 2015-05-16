@@ -103,26 +103,26 @@ The model-fitting algorithm used in this work that was most recently proposed wa
 
 <p>Of the three filtering algorithms used statistical outlier removal performed the best. Passthrough thresholding generated an incomprehensible point cloud that generally did not resemble the input point cloud. The radius outlier removal algorithm performed much better and was able to remove a majority of noise surrounding the data set. Only tightly packed clusters of anomalous data points were left unfiltered. Statistical outlier removal however performed the best and removed almost all noise. A comparison between the original point cloud, radius and statistical can be seen in Figures _, _ and _ respectively. </p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Original Filter TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGTjM5d1ZEQi1scFk" alt="Original Filter"></p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Radius Filter TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGN1hPMm1SaXgyUWM" alt="Radius Filter"></p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Statistical Filter TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGMktLcVZDa3VhT0E" alt="Statistical Filter"></p>
 
 <p>Each algorithm was run on data sets of increasing size. Figure _ shows the timing results on datasets ranging from 7492 points to over 480k points. Since the passthrough filter is simply a thresholding procedure it performed very quickly at all point amounts. The radius outlier removal algorithm had very strange results and showed how difficult it is to compare data sets based on size. Instead of following an increasing trend the timing results for the radius implementation would increase and decrease as the point size increased. One explanation for this behavior is that the radius outlier removal algorithm performs more poorly when the dataset contains dense points. The runtime of the statistical outlier removal algorithm follows more traditional trend. As the size of the dataset increases the time increases as well. Only the radius and statistical outlier removal algorithms are comparable. For large data sets the radius removal algorithm will perform better than the statistical algorithm. However this is highly dependent on the density of the points within the dataset.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Filter Graph TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGenlpRXVzYWRCUHM" alt="Filter Graph"></p>
 
 <h3>
 <a id="plane-estimation" class="anchor" href="#plane-estimation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plane Estimation</h3>
 
 <p>Two types of tests were run on the plane estimation stage of the algorithm. The first set of tests was performed to analyze on the accuracy of the algorithms for estimating the proper ground plane. As a result of a lack of labeled datasets for this work this set of tests was purely qualitative. Surprisingly all three algorithms returned very similar results, there were not discernable difference between any of the algorithms. Figure _ shows examples of multiple views of the input datasets (left) and the resulting set of inlier points (right). The top row demonstrates that using just plane extraction might be sufficient for datasets with a relatively uniform ground; however the second row demonstrates that such techniques fail when the scene consists nonplanar ground, such as hilly terrain.  </p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Plane Estimation TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGMWZncDRRM0RxZzQ" alt="Plane Estimation"></p>
 
 <p>The second set of tests was performed to analyze the computation time of each of the three plane estimation algorithms. A plot of the execution times for the algorithms run on datasets with varying number of points can be seen in Figure _. In this figure it is clear that the RANSAC algorithm takes significantly longer than both the LMEDS algorithm and the PROSAC algorithm. This is consistent with the fact that LMEDS is less complex than RANSAC and does not require multiple iterations. Additionally PROSAC is a more recently developed algorithm that greedily selects the best matching points initially, thus reducing the wasted computations on poorly matching points. As a result of this test we recommend using the PROSAC plane fitting algorithm for future work.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Plane Est Graph TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGS3FCcmZ4N0R6eDQ" alt="Plane Est Graph"></p>
 
 <h3>
 <a id="segmentation" class="anchor" href="#segmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Segmentation</h3>
