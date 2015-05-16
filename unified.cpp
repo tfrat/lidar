@@ -40,7 +40,8 @@ typedef struct {
 } PlaneDetectOutput;
 
 /*
- * LOOK HERE: A majority of these algorithms were adapted from tutorials found on the pcl documentation webpage.
+ * Note: Some of the methods in this work have been adapted from examples and tutorials found on the pcl
+ *       documentation webpage.
  * Found here: http://pointclouds.org/documentation/tutorials/
  */
 
