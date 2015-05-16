@@ -129,13 +129,12 @@ The model-fitting algorithm used in this work that was most recently proposed wa
 
 <p>Two algorithms were tested for ground plane segmentation. The Graph Cuts algorithm gave mixed results. Since the algorithm utilizes the results of the plane estimation as its seed values it can only be as good as the estimation. This resulted in large gaps where the plane estimation stripped away elevation. Additionally, due to the graph cuts algorithm requiring the weighting function to be the 3D euclidian distance between points, it limited our ability to isolate the inconsistent points relative to their vertical position (as would be done ideally). An example of this can be seen in Figures _ and _. </p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Graph Cuts Orig TODO">
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Graph Cuts Output TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZnFsQUN1eFlCdDA" alt="Graph Cuts Orig"></p>
 
 <p>The Progressive Morphological filter produced an accurate ground plane. Almost all objects were removed from the data set and the ground points were kept intact. This can be seen in Figures _ and _. In both Figures the left image shows the original image and the right shows the output from the filter. It can be seen that the buildings and trees are properly removed, even off of the hill in Figure _ while keeping the terrain intact.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Prog One TODO">
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Prog Two TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGSXFQSzBUb1pYUkk" alt="Prog One">
+<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGVlV6V2o0RWxxUDA" alt="Prog Two"></p>
 
 <p>As far as runtime performance is concerned the Progressive Morphological Filter ran slightly slower with data sets smaller than 50,000. After that threshold the Graph Cuts algorithm runtime sharply increased and the Progressive Morphological Filter became much more efficient. </p>
 
@@ -144,7 +143,7 @@ The model-fitting algorithm used in this work that was most recently proposed wa
 
 <p>By using the fast triangulation algorithm provided by the PCL library a mesh was generated for the extracted ground plane segment, which can be seen in Figure _. The resulting mesh was fairly accurate but had a few error points. There are gaps in some areas where the triangulation could not be completed. This is most likely a case where the no triangle could be made within the maximum inner angle threshold.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZjY5cnZaT29rNFE" alt="Mesh TODO"></p>
+<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGbW5KV18ya1B5UzQ" alt="Mesh"></p>
 
 <h1>
 <a id="8-challenges" class="anchor" href="#8-challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Challenges</h1>
