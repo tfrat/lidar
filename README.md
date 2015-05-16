@@ -8,4 +8,4 @@ cd build
 cmake ../
 make
 
-Usage: unified <input file> <output file> <# of iterations> <filter algortihm> <plane extration algorithm> <segmentation algorithm> <mesh generation on/off>
+Usage: unified \<input file\> \<output file\> \<\# of iterations\> \<filter algortihm\> \<plane extration algorithm\> \<segmentation algorithm\> \<mesh generation on/off\>
