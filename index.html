@@ -108,47 +108,111 @@ The model-fitting algorithm used in this work that was most recently proposed wa
 
 <p>Of the three filtering algorithms used statistical outlier removal performed the best. Passthrough thresholding generated an incomprehensible point cloud that generally did not resemble the input point cloud. The radius outlier removal algorithm performed much better and was able to remove a majority of noise surrounding the data set. Only tightly packed clusters of anomalous data points were left unfiltered. Statistical outlier removal however performed the best and removed almost all noise. A comparison between the original point cloud, radius and statistical can be seen in Figures 2, 3 and 4 respectively. </p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGalB0bkctbUZ1WDQ" alt="2 - Original Filter"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGalB0bkctbUZ1WDQ" alt="2 - Original Filter">
+        <figcaption> <b> Figure 2 - Original point cloud. </b> </figcaption>
+    </figure>
+</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZm53VTFTRXZTMEU" alt="3 - Radius Filter"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZm53VTFTRXZTMEU" alt="3 - Radius Filter">
+        <figcaption> <b> Figure 3 - Filtered point cloud using Radius Outlier Removal. </b> </figcaption>
+    </figure>
+</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGU1hIOFBpUlZCeFU" alt="4 - Statistical Filter"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGU1hIOFBpUlZCeFU" alt="4 - Statistical Filter">
+        <figcaption> <b> Figure 4 - Filtered point cloud using Statistical Outlier Removal. </b> </figcaption>
+    </figure>
+</p>
 
 <p>Each algorithm was run on data sets of increasing size. Figure 5 shows the timing results on datasets ranging from 7492 points to over 480k points. Since the passthrough filter is simply a thresholding procedure it performed very quickly at all point amounts. The radius outlier removal algorithm had very strange results and showed how difficult it is to compare data sets based on size. Instead of following an increasing trend the timing results for the radius implementation would increase and decrease as the point size increased. One explanation for this behavior is that the radius outlier removal algorithm performs more poorly when the dataset contains dense points. The runtime of the statistical outlier removal algorithm follows more traditional trend. As the size of the dataset increases the time increases as well. Only the radius and statistical outlier removal algorithms are comparable. For large data sets the radius removal algorithm will perform better than the statistical algorithm. However this is highly dependent on the density of the points within the dataset.</p>
 
 <p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGUVVWd0hTMW5jTDQ" alt="5 - Filter Graph"></p>
+
+<p>
+    <figure>
+
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGUVVWd0hTMW5jTDQ" alt="5 - Filter Graph">
+        <figcaption> <b> Figure 5 - Runtimes for the three filtering algorithms. </b> </figcaption>
+    </figure>
+</p>
+
 
 <h3>
 <a id="plane-estimation" class="anchor" href="#plane-estimation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plane Estimation</h3>
 
 <p>Two types of tests were run on the plane estimation stage of the algorithm. The first set of tests was performed to analyze on the accuracy of the algorithms for estimating the proper ground plane. As a result of a lack of labeled datasets for this work this set of tests was purely qualitative. Surprisingly all three algorithms returned very similar results, there were not discernable difference between any of the algorithms. Figure 6 shows examples of multiple views of the input datasets (left) and the resulting set of inlier points (right). The top row demonstrates that using just plane extraction might be sufficient for datasets with a relatively uniform ground; however the second row demonstrates that such techniques fail when the scene consists nonplanar ground, such as hilly terrain.  </p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGMWZncDRRM0RxZzQ" alt="6 - Plane Estimation"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGMWZncDRRM0RxZzQ" alt="6 - Plane Estimation">
+        <figcaption> <b> Figure 6 - Two examples of plane estimation. </b> </figcaption>
+    </figure>
+</p>
 
 <p>The second set of tests was performed to analyze the computation time of each of the three plane estimation algorithms. A plot of the execution times for the algorithms run on datasets with varying number of points can be seen in Figure 7. In this figure it is clear that the RANSAC algorithm takes significantly longer than both the LMEDS algorithm and the PROSAC algorithm. This is consistent with the fact that LMEDS is less complex than RANSAC and does not require multiple iterations. Additionally PROSAC is a more recently developed algorithm that greedily selects the best matching points initially, thus reducing the wasted computations on poorly matching points. As a result of this test we recommend using the PROSAC plane fitting algorithm for future work.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGYnBGUXJyVkVqNXc" alt="7 - Plane Est Graph"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGYnBGUXJyVkVqNXc" alt="7 - Plane Est Graph">
+        <figcaption> <b> Figure 7 - Runtimes for RANSAC, LMEDS and PROSAC plane estimation algorithms. </b> </figcaption>
+    </figure>
+</p>
 
 <h3>
 <a id="segmentation" class="anchor" href="#segmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Segmentation</h3>
 
 <p>Two algorithms were tested for ground plane segmentation. The Graph Cuts algorithm gave mixed results. Since the algorithm utilizes the results of the plane estimation as its seed values it can only be as good as the estimation. This resulted in large gaps where the plane estimation stripped away elevation. Additionally, due to the graph cuts algorithm requiring the weighting function to be the 3D euclidian distance between points, it limited our ability to isolate the inconsistent points relative to their vertical position (as would be done ideally). An example of this can be seen in Figure 8. The left image is the original point cloud, the middle is the seed plane from plane estimation and the rightmost image is the output of the Graph Cuts algorithm. </p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZnFsQUN1eFlCdDA" alt="8 - Graph Cuts Orig"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGZnFsQUN1eFlCdDA" alt="8 - Graph Cuts Orig">
+        <figcaption> <b> Figure 8 - Process for performing the Graph Cuts algorithm. </b> </figcaption>
+    </figure>
+</p>
 
 <p>The Progressive Morphological filter produced an accurate ground plane. Almost all objects were removed from the data set and the ground points were kept intact. This can be seen in Figures 9 and 10. In both Figures the left image shows the original image and the right shows the output from the filter. It can be seen that the buildings and trees are properly removed, even off of the hill in Figure 10 while keeping the terrain intact.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGSXFQSzBUb1pYUkk" alt="9 - Prog One">
-<img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGVlV6V2o0RWxxUDA" alt="10 - Prog Two"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGSXFQSzBUb1pYUkk" alt="9 - Prog One">
+        <figcaption> <b> Figure 9 - Demonstration of the Progressive Morphological Filter on a an urban area. </b> </figcaption>
+    </figure>
+</p>
 
-<p>As far as runtime performance is concerned the Progressive Morphological Filter ran slightly slower with data sets smaller than 50,000. After that threshold the Graph Cuts algorithm runtime sharply increased and the Progressive Morphological Filter became much more efficient. </p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGVlV6V2o0RWxxUDA" alt="10 - Prog Two">
+        <figcaption> <b> Figure 10 - Demonstration of the Progressive Morphological Filter on a an area with natural elevation. </b> </figcaption>
+    </figure>
+</p>
+
+
+<p>In Figure 11 the runtime performance for the two segmentation algorithms can be seen. The Progressive Morphological Filter ran slightly slower then Graph Cuts with data sets smaller than 50,000. After that threshold the Graph Cuts algorithm runtime sharply increased and the Progressive Morphological Filter became much more efficient. </p>
+
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGc2cwaVIwTzZSNUk" alt="11 - Segmentation Graph">
+        <figcaption> <b> Figure 11 - Runtimes for the Graph Cuts and Progressive Morphological algorithms. </b> </figcaption>
+    </figure>
+</p>
 
 <h3>
 <a id="mesh-generation" class="anchor" href="#mesh-generation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mesh Generation</h3>
 
-<p>By using the fast triangulation algorithm provided by the PCL library a mesh was generated for the extracted ground plane segment, which can be seen in Figure 11. The resulting mesh was fairly accurate but had a few error points. There are gaps in some areas where the triangulation could not be completed. This is most likely a case where the no triangle could be made within the maximum inner angle threshold.</p>
+<p>By using the fast triangulation algorithm provided by the PCL library a mesh was generated for the extracted ground plane segment, which can be seen in Figure 12. The resulting mesh was fairly accurate but had a few error points. There are gaps in some areas where the triangulation could not be completed. This is most likely a case where the no triangle could be made within the maximum inner angle threshold.</p>
 
-<p><img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGbW5KV18ya1B5UzQ" alt="11 - Mesh"></p>
+<p>
+    <figure>
+        <img src="https://drive.google.com/uc?id=0B4VJB4X3lwZGbW5KV18ya1B5UzQ" alt="12 - Mesh">
+        <figcaption> <b> Figure 12 - Mesh generated for a segmented ground plane. </b> </figcaption>
+    </figure>
+</p>
+
 
 <h1>
 <a id="8-challenges" class="anchor" href="#8-challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Challenges</h1>
